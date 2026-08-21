@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel R. Tini — Cloud &amp; Systems Support Engineer</title>
+<meta name="description" content="Daniel R. Tini — Enterprise SaaS &amp; Cloud Support Engineer. Azure, T-SQL, Salesforce Service Cloud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1220;
+    --surface:#111B2E;
+    --surface-2:#16233A;
+    --line:#233150;
+    --text:#E8EDF5;
+    --text-dim:#8A97AC;
+    --accent:#4C8DFF;
+    --accent-dim:#2A5BB8;
+    --ok:#3ECF8E;
+    --warn:#F5A623;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px;
+    background-attachment:fixed;
+    background-position:center;
+  }
+
+  a{ color:inherit; }
+
+  ::selection{ background:var(--accent-dim); color:#fff; }
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* NAV */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(11,18,32,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 24px;
+    max-width:920px;
+    margin:0 auto;
+  }
+  .logo{
+    font-family:var(--mono);
+    font-size:15px;
+    font-weight:600;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo .dot{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--ok);
+    box-shadow:0 0 0 3px rgba(62,207,142,0.15);
+  }
+  .navlinks{
+    display:flex;
+    gap:28px;
+    font-family:var(--mono);
+    font-size:13px;
+    list-style:none;
+  }
+  .navlinks a{
+    text-decoration:none;
+    color:var(--text-dim);
+    transition:color .15s;
+  }
+  .navlinks a:hover{ color:var(--accent); }
+
+  @media (max-width:640px){
+    .navlinks{ display:none; }
+  }
+
+  /* HERO */
+  .hero{
+    padding:96px 0 72px;
+    border-bottom:1px solid var(--line);
+  }
+  .terminal{
+    font-family:var(--mono);
+    font-size:14px;
+    color:var(--ok);
+    margin-bottom:28px;
+  }
+  .terminal .prompt{ color:var(--accent); }
+  .terminal .caret{
+    display:inline-block;
+    width:8px; height:16px;
+    background:var(--ok);
+    margin-left:4px;
+    vertical-align:middle;
+    animation:blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  h1{
+    font-family:var(--mono);
+    font-size:clamp(32px, 5vw, 52px);
+    font-weight:700;
+    letter-spacing:-0.01em;
+    line-height:1.15;
+    margin-bottom:10px;
+  }
+  .role-line{
+    font-size:18px;
+    color:var(--text-dim);
+    margin-bottom:24px;
+    max-width:560px;
+  }
+  .role-line strong{ color:var(--text); font-weight:600; }
+
+  .badges{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:32px;
+  }
+  .badge{
+    font-family:var(--mono);
+    font-size:12px;
+    padding:6px 12px;
+    border-radius:4px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color:var(--text-dim);
+  }
+  .badge .dot{ width:6px; height:6px; border-radius:50%; }
+  .badge.ok .dot{ background:var(--ok); }
+  .badge.warn .dot{ background:var(--warn); }
+  .badge.accent .dot{ background:var(--accent); }
+
+  .cta-row{ display:flex; gap:12px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono);
+    font-size:13px;
+    font-weight:600;
+    text-decoration:none;
+    padding:11px 20px;
+    border-radius:5px;
+    display:inline-block;
+    transition:transform .12s, background .15s, border-color .15s;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#061021;
+  }
+  .btn-primary:hover{ transform:translateY(-1px); background:#5f9aff; }
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--text);
+    background:transparent;
+  }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+
+  /* SECTIONS */
+  section{ padding:64px 0; border-bottom:1px solid var(--line); }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  h2{
+    font-family:var(--mono);
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:32px;
+  }
+  p.lede{
+    color:var(--text-dim);
+    max-width:640px;
+    margin-bottom:8px;
+  }
+
+  /* EXPERIENCE LOG */
+  .log{
+    position:relative;
+    padding-left:28px;
+    border-left:1px solid var(--line);
+  }
+  .entry{
+    position:relative;
+    padding-bottom:36px;
+  }
+  .entry:last-child{ padding-bottom:0; }
+  .entry::before{
+    content:'';
+    position:absolute;
+    left:-33px;
+    top:4px;
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--accent);
+  }
+  .entry.current::before{
+    background:var(--ok);
+    border-color:var(--ok);
+    box-shadow:0 0 0 4px rgba(62,207,142,0.15);
+  }
+  .entry-date{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+    margin-bottom:4px;
+  }
+  .entry-title{
+    font-size:17px;
+    font-weight:600;
+    margin-bottom:2px;
+  }
+  .entry-org{
+    font-size:14px;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  .entry-body{
+    color:var(--text-dim);
+    font-size:14.5px;
+    max-width:600px;
+  }
+
+  /* SKILLS */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:20px;
+  }
+  .skill-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:20px;
+  }
+  .skill-card h3{
+    font-family:var(--mono);
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--text-dim);
+    margin-bottom:14px;
+  }
+  .skill-list{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .skill-list li{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-size:14.5px;
+  }
+  .skill-list .dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--ok);
+    flex-shrink:0;
+  }
+
+  /* PROJECTS */
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:20px;
+  }
+  .project-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    transition:border-color .15s, transform .15s;
+  }
+  .project-card:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .project-name{
+    font-family:var(--mono);
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:8px;
+    color:var(--text);
+  }
+  .project-desc{
+    color:var(--text-dim);
+    font-size:14px;
+    margin-bottom:16px;
+    flex-grow:1;
+  }
+  .project-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:16px;
+  }
+  .tag{
+    font-family:var(--mono);
+    font-size:11px;
+    padding:3px 8px;
+    border-radius:3px;
+    background:var(--surface-2);
+    color:var(--text-dim);
+    border:1px solid var(--line);
+  }
+  .project-link{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--accent);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .project-link:hover{ text-decoration:underline; }
+
+  /* CERTS */
+  .cert-row{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .cert{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:18px 20px;
+  }
+  .cert-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+    font-family:var(--mono);
+    font-size:13px;
+  }
+  .cert-name{ font-weight:600; }
+  .cert-status{ color:var(--text-dim); }
+  .cert-status.done{ color:var(--ok); }
+  .cert-status.progress{ color:var(--warn); }
+  .bar-track{
+    width:100%;
+    height:6px;
+    background:var(--surface-2);
+    border-radius:3px;
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    background:var(--accent);
+    border-radius:3px;
+  }
+  .bar-fill.done{ background:var(--ok); }
+
+  /* CONTACT */
+  .contact-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:40px;
+    text-align:center;
+  }
+  .contact-card h2{ margin-bottom:12px; }
+  .contact-card p{ color:var(--text-dim); max-width:480px; margin:0 auto 28px; }
+  .contact-links{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+
+  footer{
+    padding:32px 0;
+    text-align:center;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-dim);
+  }
+
+  code.inline{
+    font-family:var(--mono);
+    background:var(--surface-2);
+    padding:2px 6px;
+    border-radius:3px;
+    font-size:0.92em;
+    color:var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><span class="dot"></span> daniel@cloud:~</div>
+    <ul class="navlinks">
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#certs">certifications</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="terminal">
+      <span class="prompt">$</span> whoami<span class="caret"></span>
+    </div>
+    <h1>Daniel R. Tini</h1>
+    <p class="role-line">
+      <strong>Enterprise SaaS &amp; Cloud Support Engineer</strong> — Azure, T‑SQL, and enterprise SaaS platforms.
+      Based in Victoria, Australia.
+    </p>
+    <div class="badges">
+      <span class="badge ok"><span class="dot"></span>Open to opportunities</span>
+      <span class="badge warn"><span class="dot"></span>AZ‑104 in progress</span>
+      <span class="badge accent"><span class="dot"></span>3+ yrs enterprise SaaS &amp; cloud support</span>
+    </div>
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <a href="#projects" class="btn btn-ghost">View projects</a>
+    </div>
+  </section>
+
+  <section id="experience" class="wrap">
+    <div class="eyebrow">// work history</div>
+    <h2>Experience log</h2>
+    <div class="log">
+
+      <div class="entry current">
+        <div class="entry-date">CURRENT</div>
+        <div class="entry-title">Level 1 Technical Support Engineer</div>
+        <div class="entry-org">Mitratech</div>
+        <div class="entry-body">
+          Enterprise SaaS support working daily with Azure AD/Entra ID and Azure SQL. Manages customer
+          cases end‑to‑end, from triage through to resolution, with a focus on clear documentation
+          and knowledge transfer.
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">PRIOR ROLE</div>
+        <div class="entry-title">Application Support Specialist</div>
+        <div class="entry-org">Profisee</div>
+        <div class="entry-body">
+          Diagnosed and resolved a P1 production performance incident by tracing root cause through
+          Azure Portal metrics and SQL Server Management Studio's Activity Monitor — restoring service
+          under significant business pressure.
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">PRIOR ROLE</div>
+        <div class="entry-title">Technical Support Consultant</div>
+        <div class="entry-org">QMetrix</div>
+        <div class="entry-body">
+          Delivered an Azure AD SSO integration independently with no existing documentation to
+          follow, then authored the documentation afterward to reduce future dependency on
+          engineering.
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">EARLIER</div>
+        <div class="entry-title">Personal Banker</div>
+        <div class="entry-org">ANZ Bank</div>
+        <div class="entry-body">
+          Direct, face‑to‑face customer service: advising on financial products, resolving account
+          issues, and managing client relationships.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="skills" class="wrap">
+    <div class="eyebrow">// stack</div>
+    <h2>Skills</h2>
+    <div class="skill-groups">
+      <div class="skill-card">
+        <h3>Cloud &amp; Identity</h3>
+        <ul class="skill-list">
+          <li><span class="dot"></span>Azure AD / Entra ID</li>
+          <li><span class="dot"></span>Azure SQL</li>
+          <li><span class="dot"></span>Azure VMs</li>
+          <li><span class="dot"></span>Kubernetes</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>Support &amp; Tooling</h3>
+        <ul class="skill-list">
+          <li><span class="dot"></span>Salesforce Service Cloud</li>
+          <li><span class="dot"></span>REST API / Postman</li>
+          <li><span class="dot"></span>Incident triage &amp; escalation</li>
+          <li><span class="dot"></span>Technical documentation</li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <h3>Data &amp; Scripting</h3>
+        <ul class="skill-list">
+          <li><span class="dot"></span>T‑SQL</li>
+          <li><span class="dot"></span>PowerShell</li>
+          <li><span class="dot"></span>ARM templates / Bicep</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="wrap">
+    <div class="eyebrow">// hands-on</div>
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="project-name">azure-az104-vnet-portfolio</div>
+        <div class="project-desc">
+          AZ‑104 lab documentation covering VNet architecture. Includes CoreServicesVnet and
+          ManufacturingVnet ARM templates, with Mermaid diagrams documenting the network design.
+        </div>
+        <div class="project-tags">
+          <span class="tag">ARM Templates</span>
+          <span class="tag">VNet</span>
+        </div>
+        <a href="#" class="project-link">View on GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs" class="wrap">
+    <div class="eyebrow">// credentials</div>
+    <h2>Certifications &amp; education</h2>
+    <div class="cert-row">
+      <div class="cert">
+        <div class="cert-top">
+          <span class="cert-name">AZ‑104: Microsoft Azure Administrator</span>
+          <span class="cert-status progress">IN PROGRESS</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:50%"></div></div>
+      </div>
+      <div class="cert">
+        <div class="cert-top">
+          <span class="cert-name">Bachelor of Business (Information Systems) — RMIT University</span>
+          <span class="cert-status done">COMPLETED · Distinction</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill done" style="width:100%"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="wrap" style="border-bottom:none;">
+    <div class="contact-card">
+      <div class="eyebrow" style="text-align:center;">// reach out</div>
+      <h2>Let's talk</h2>
+      <p>
+        I am open to Cloud Support, CloudOps, and Application Support roles.
+        The fastest way to reach me is by email or LinkedIn.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:danieltini@outlook.com" class="btn btn-primary">Email me</a>
+        <a href="https://linkedin.com/in/danieltini" class="btn btn-ghost">LinkedIn</a>
+        <a href="https://github.com/DanielTini" class="btn btn-ghost">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    deployed on <code class="inline">Azure Static Web Apps</code> · built with GitHub Actions CI/CD
+  </div>
+</footer>
+
+</body>
+</html>
